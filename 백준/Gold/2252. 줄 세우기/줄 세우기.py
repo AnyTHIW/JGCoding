@@ -12,7 +12,7 @@ _N, _M = map(int, input_from_sys().split())
 _INPUT = [list(map(int, input_from_sys().split())) for _ in range(_M)]
 # range(_M)에 대해 _INPUT data 입력받기
 
-graph = [[] for _ in range(_N + 1)]
+graph = [list() for _ in range(_N + 1)]
 # 역시나 index 0 값은 안 쓰고, _N+1에 대해, 배열내배열 선언
 # 인접 리스트와 진입 차수 초기화
 
