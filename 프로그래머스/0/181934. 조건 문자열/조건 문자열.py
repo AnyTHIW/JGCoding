@@ -1,10 +1,2 @@
 def solution(ineq, eq, n, m):
-    if eq == '=' and n == m:
-        return 1
-    
-    if ineq == '>' and n > m:
-        return 1
-    elif ineq == '<' and n < m:
-        return 1
-    
-    return 0
+    return int((eq == '=' and n == m) or (ineq == '>' and n > m) or (ineq == '<' and n < m))
