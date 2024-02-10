@@ -9,4 +9,5 @@ def solution(num_list):
             even_string += str(item)
             
     answer = int(odd_string) + int(even_string)
+    
     return answer
