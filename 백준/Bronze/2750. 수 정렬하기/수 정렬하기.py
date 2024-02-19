@@ -1,27 +1,38 @@
-
-import array
 import sys
 
+# from AlgoTime import CalculateTime
 IFS = sys.stdin.readline
 
 
+# @CalculateTime
+def heap_sort(arr):
+    def heapify(arr, left: int, right: int):
+        temp = arr[left]
 
-def bubble_sort(a: list) -> None:
-    n = len(a)
-    k = 0
+        parent = left
+        while parent < (right + 1) // 2:
+            curr_left = parent*2 + 1
+            curr_right = curr_left + 1
 
-    while k < n-1:
-        last = n-1
-        for j in range(n-1, k, -1):
-            if a[j-1] > a[j]:
-                a[j-1], a[j] = a[j], a[j-1]
-                last = j
-        k = last
+            child = curr_right if curr_right <= right and arr[
+                curr_right] > arr[curr_left] else curr_left
+            if temp >= arr[child]:
+                break
+            arr[parent] = arr[child]
+            parent = child
+        arr[parent] = temp
+
+    n = len(arr)
+
+    for i in range((n-1) // 2, -1, -1):
+        heapify(arr, i, n-1)
+    for i in range(n-1, 0, -1):
+        arr[0], arr[i] = arr[i], arr[0]
+        heapify(arr, 0, i-1)
 
 
 if __name__ == '__main__':
     _N = int(IFS().rstrip())
     _numbers = [int(IFS().rstrip()) for _ in range(_N)]
-    bubble_sort(_numbers)
-
+    heap_sort(_numbers)
     print(* _numbers, sep="\n")
