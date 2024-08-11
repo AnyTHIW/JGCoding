@@ -1,5 +1,4 @@
 import sys
-from tabnanny import check
 
 IFS = sys.stdin.readline
 IFSs = sys.stdin.readlines
@@ -7,22 +6,23 @@ IFSs = sys.stdin.readlines
 _T = int(IFS().rstrip())
 _PS_STRING = [ _.rstrip() for _ in IFSs() ]
 
-checkNumber = 0
-
 def CheckVPS(string: str):
-    checkNumber = 0
+    stk = []
     
     for char in string:
-        if checkNumber < 0:
-            break
         if char == "(":
-            checkNumber += 1
+            stk.append(char)
         elif char == ")":
-            checkNumber -= 1
+            if stk:
+                stk.pop()
+            else:
+                print("NO")
+                return
         else:
             print("error")
-            
-    if checkNumber == 0:
+            return
+        
+    if not stk:
         print("YES")
     else:
         print("NO")
