@@ -6,35 +6,29 @@ IFSs = sys.stdin.readlines
 _TC_N = int(IFS().rstrip())
 _N_AllDocNumber = []
 _M_TargetDocOrder = []
-_AllDocPriority = []
+_TC_Priority = []
 
+for _ in range(_TC_N):
+    n, m = list(map(int, IFS().split()))
+    _N_AllDocNumber += [ n ]
+    _M_TargetDocOrder += [ m ]
+    allDocPriority = list(map(int, IFS().split()))
+    _TC_Priority += [ [ (idx, item) for idx, item in enumerate(allDocPriority) ] ]
+    
 for i in range(_TC_N):
-    numbers = list(map(int, IFS().split()))
-    _N_AllDocNumber += [ numbers[0] ]
-    _M_TargetDocOrder += [ numbers[1] ]
-    _AllDocPriority.append(IFS().split())
-
-for i in range(_TC_N):
-    n, mTargetIdx, queue = _N_AllDocNumber[i], _M_TargetDocOrder[i], _AllDocPriority[i]
-    priorityQueue = sorted(queue)
+    n, mTargetIdx, queue = _N_AllDocNumber[i], _M_TargetDocOrder[i], _TC_Priority[i][:]
+    priorityQueue = sorted(queue, key=lambda x:x[1], reverse=True)
     printingCount = 0
-
+    
     while queue:
-        readyDoc = queue[0]
+        readyDoc = queue.pop(0)
         
-        if readyDoc == priorityQueue[-1]:
+        if readyDoc[1] == priorityQueue[printingCount][1]:
             printingCount += 1
-            queue.pop(0)
-            priorityQueue.pop()
             
-            if mTargetIdx <= 0:
+            if mTargetIdx == readyDoc[0]:
                 print(printingCount)
                 break
-
+            
         else:
-            queue.append(queue.pop(0))
-
-        if mTargetIdx <= 0:
-            mTargetIdx = len(queue) - 1
-        else:
-            mTargetIdx -= 1
+            queue.append(readyDoc)
