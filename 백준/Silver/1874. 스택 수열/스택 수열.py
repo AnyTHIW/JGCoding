@@ -1,7 +1,9 @@
 import sys
 
 class CustomList(list):
-    plusMinus = ""
+    def __init__(self):
+        super().__init__()
+        self.plusMinus = ""
     
     def push(self:"CustomList", num:int):
         super().append(num)
@@ -21,16 +23,15 @@ stack = CustomList()
 
 numb = 1
 for item in _Order:
-    while not stack or item > stack[-1]:
+    while numb <= item:
         stack.push(numb)
         numb += 1
     
-    if item == stack[-1]:
+    if stack and item == stack[-1]:
         stack.pop()
     else:
         print("NO")
         break
 
 else:
-    for chr in stack.plusMinus:
-        print(chr)
+    print("\n".join(stack.plusMinus))
