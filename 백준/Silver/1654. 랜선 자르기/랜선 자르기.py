@@ -6,18 +6,17 @@ IFSs = sys.stdin.readlines
 _K, _N = map(int, IFS().split())
 _List_LAN_Wire = [ int(_) for _ in IFSs() ]
 
-_List_LAN_Wire.sort()
-start, end = 1, max(_List_LAN_Wire)
-
-while start <= end:
-    mid = (start + end) // 2
-    targetN = 0
-    for item in _List_LAN_Wire:
-        targetN += item // mid
+def BS(left, right):
+    if left > right:
+        return right
+    
+    mid = (left+right) // 2
+    targetN = sum(item // mid for item in _List_LAN_Wire)
     
     if targetN >= _N:
-        start = mid + 1
+        return BS(mid+1, right)
     else:
-        end = mid - 1
+        return BS(left, mid-1)
 
-print(end)
+start, end = 1, max(_List_LAN_Wire)
+print(BS(start, end))
