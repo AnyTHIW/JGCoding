@@ -1,37 +1,31 @@
 import sys
 
-def Add(Group:set, num:int):
-    if not num in Group:
-        Group.add(num)
+AllSet = (1 << 21) - 1
+EmptySet = 0
+
+def Add(Bit, num):
+    return Bit | (1 << num)
         
-def Remove(Group:set, num:int):
-    if num in Group:
-        Group.remove(num)
+def Remove(Bit, num):
+    return Bit & ~(1 << num)
         
-def Check(Group:set, num:int):
-    if num in Group:
-        print("1")
-    else:
-        print("0")
+def Check(Bit, num):
+    print(1 if Bit & (1 << num) else 0)
     
-def Toggle(Group:set, num:int):
-    if num in Group:
-        Group.remove(num)
-    else:
-        Group.add(num)
+def Toggle(Bit, num):
+    return Bit ^ (1 << num)
 
-def All() -> set:
-    return set(range(1,21))
+def All():
+    return AllSet
 
-def Empty() -> set:
-    return set()
+def Empty():
+    return EmptySet
     
 IFS = sys.stdin.readline
 IFSs = sys.stdin.readlines
 
 _M = int(IFS().rstrip())
-# _CommandList = [ _.split() for _ in IFSs() ]
-S = set()
+BitMaskedSet = 0
 
 for i in range(_M):
     command = IFS().split()
@@ -39,25 +33,25 @@ for i in range(_M):
     
     if cmdString == "add":
         x = int(command[1])
-        Add(S,x)
+        BitMaskedSet = Add(BitMaskedSet,x)
             
     elif cmdString == "remove":
         x = int(command[1])
-        Remove(S,x)
+        BitMaskedSet = Remove(BitMaskedSet,x)
             
     elif cmdString == "check":
         x = int(command[1])
-        Check(S,x)
+        Check(BitMaskedSet,x)
             
     elif cmdString == "toggle":
         x = int(command[1])
-        Toggle(S,x)
+        BitMaskedSet =Toggle(BitMaskedSet,x)
             
     elif cmdString == "all":
-        S = All()
+        BitMaskedSet = All()
         
     elif cmdString == "empty":
-        S = Empty()
+        BitMaskedSet = Empty()
         
     else:
         print("Error")
