@@ -29,5 +29,5 @@ def DP_down(idx):
     return DP_down_inner(idx)
 
 for tc in _N:
-    # print(* DP_up(tc),sep=" ")
-    print(* DP_down(tc),sep=" ")
+    print(* DP_up(tc),sep=" ")
+    # print(* DP_down(tc),sep=" ")
