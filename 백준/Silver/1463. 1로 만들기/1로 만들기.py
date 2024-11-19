@@ -1,4 +1,5 @@
 import sys
+sys.setrecursionlimit(10**6)
 
 IFS = sys.stdin.readline
 IFSs = sys.stdin.readlines
@@ -27,25 +28,28 @@ def DP_upward(number):
     return print(lst[number])
 
 def DP_downward(number):
-    lst = [-1, 0, 1, 1] + [-1] * max(0, number - 1)
+    lst = {1:0, 2:1, 3:1}
 
     def DP_downward_inner(number):
-        if lst[number] != -1:
+        if number in lst:
             return lst[number]
         
-        temp1, temp2 = INFINITE, INFINITE
-        if not(number%3):
-            temp1 = DP_downward_inner(int(number/3)) + 1
-            
-        if not(number%2):
-            temp2 = DP_downward_inner(int(number/2)) + 1
-            
-        lst[number] = int(min(DP_downward_inner(int(number-1)) + 1, temp1, temp2))
-            
+        if not(number%6):
+            lst[number] = min(DP_downward_inner(number//3), DP_downward_inner(number//2)) + 1
+
+        elif not(number%3):
+            lst[number] = min(DP_downward_inner(number//3), DP_downward_inner(number-1)) + 1
+
+        elif not(number%2):
+            lst[number] = min(DP_downward_inner(number//2), DP_downward_inner(number-1)) + 1
+
+        else:
+            lst[number] = DP_downward_inner(number-1) + 1
+        
         return lst[number]
 
     return print(DP_downward_inner(number))
     
-DP_upward(_N)
-# DP_downward(_N)
+# DP_upward(_N)
+DP_downward(_N)
 
