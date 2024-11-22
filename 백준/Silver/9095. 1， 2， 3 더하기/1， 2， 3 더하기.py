@@ -49,5 +49,5 @@ def DP_downward(lst: list) -> dict[int, int]:
         
     return sumMethod
 
-DP_upward_print()
-# DP_downward_print()
+# DP_upward_print()
+DP_downward_print()
