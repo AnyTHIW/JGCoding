@@ -32,6 +32,6 @@ def DP_down(number: int) -> int:
 for idx in range(1, _T+1):
     _N = int(data[idx])
     
-    print(DP_up(_N))
-    # print(DP_down(_N))
+    # print(DP_up(_N))
+    print(DP_down(_N))
     
