@@ -6,14 +6,11 @@ inputs = sys.stdin.readlines
 _N, _M = map(int, input().split())
 _seq = list(map(int, input().split()))
 
-data = [list(map(int, _.split())) for _ in inputs()]
+CumulSum = [0]
 
-CumulSum = [0] * (_N + 1)
-
-idx = 1
 for numb in _seq:
-    CumulSum[idx] += CumulSum[idx-1] + numb
-    idx += 1
+    CumulSum.append(CumulSum[-1] + numb)
 
-for i,j in data:
+for _ in range(_M):
+    i,j = map(int, input().split())
     print(CumulSum[j]-CumulSum[i-1])
