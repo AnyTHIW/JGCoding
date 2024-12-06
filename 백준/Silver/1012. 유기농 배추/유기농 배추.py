@@ -9,36 +9,37 @@ _T = int(input().rstrip())
 dY = [1, -1, 0, 0]
 dX = [0, 0, -1, 1]
 
-def BFS(mtx: list[list[dict]], start: dict):
+def BFS(adj:dict, startKey:tuple, m, n):
     Q = queue.Queue()
-    Q.put(start)
-    start["visit"] = True
+    adj[startKey]["visit"] = True
+    Q.put(startKey)
     
     while not Q.empty():
-        temp = Q.get()
+        tempKey = Q.get()
+        
         for i in range(4):
-            ny, nx = dY[i] + temp["position"][1], dX[i] + temp["position"][0]
+            ny, nx = dY[i] + tempKey[1], dX[i] + tempKey[0]
+            adjKey = (nx, ny)
+            
+            if 0 <= ny < n and 0 <= nx < m and (adjKey in adj) and not adj[adjKey]["visit"]:
+                adj[adjKey]["visit"] = True
                 
-            if 0 <= ny < len(mtx) and 0 <= nx < len(mtx[0]) and not mtx[ny][nx]["visit"] and mtx[ny][nx]["cabbage"]:
-                mtx[ny][nx]["visit"] = True
-                Q.put(mtx[ny][nx])
+                Q.put(adjKey)
 
 def CheckWormNumber(m:int, n:int, k:int):
-    fieldMatrix = [[{"position":(idxX,idxY), "visit":False, "cabbage":False} for idxX in range(_M_width)] for idxY in range(_N_height)]
+    AdjList = {}
 
     for _ in range(k):
         width, height = map(int, input().split())
-        fieldMatrix[height][width]["cabbage"] = True
+        AdjList[(width, height)] = {"visit":False}
 
     wormSum = 0
+    for itemKey in AdjList:
+        if AdjList[itemKey]["visit"]:
+            continue
 
-    for row in fieldMatrix:
-        for item in row:
-            if item["visit"] or not item["cabbage"]:
-                continue
-            
-            BFS(fieldMatrix, item)
-            wormSum += 1
+        BFS(AdjList, itemKey, m, n)
+        wormSum += 1
             
     print(wormSum)
 
