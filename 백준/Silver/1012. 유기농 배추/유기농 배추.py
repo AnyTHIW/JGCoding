@@ -1,5 +1,5 @@
 import sys
-import queue
+sys.setrecursionlimit(10**6)
 
 input = sys.stdin.readline
 inputs = sys.stdin.readlines
@@ -9,23 +9,26 @@ _T = int(input().rstrip())
 dY = [1, -1, 0, 0]
 dX = [0, 0, -1, 1]
 
-def BFS(dct:dict, startKey:tuple, m, n):
-    Q = queue.Queue()
-    dct[startKey] = True
-    Q.put(startKey)
+def DFS_visit(dct:dict, ky:tuple, m, n):
+    dct[ky] = True
     
-    while not Q.empty():
-        tempKey = Q.get()
-        
-        for i in range(4):
-            ny, nx = dY[i] + tempKey[1], dX[i] + tempKey[0]
-            adjKey = (nx, ny)
+    for i in range(4):
+        ny, nx = dY[i] + ky[1], dX[i] + ky[0]
+        adjKey = (nx, ny)
             
-            if 0 <= ny < n and 0 <= nx < m and (adjKey in dct) and not dct[adjKey]:
-                dct[adjKey] = True
-                
-                Q.put(adjKey)
+        if 0 <= ny < n and 0 <= nx < m and (adjKey in dct) and not dct[adjKey]:
+            DFS_visit(dct, adjKey, m, n)
 
+def DFS(dct:dict, m, n) -> int:
+    wormSum = 0
+    
+    for ky in dct:
+        if not dct[ky]:
+            DFS_visit(dct, ky, m, n)
+            wormSum += 1
+            
+    return wormSum
+            
 def CheckWormNumber(m:int, n:int, k:int):
     CabbageVisitDict = {}
 
@@ -33,15 +36,9 @@ def CheckWormNumber(m:int, n:int, k:int):
         width, height = map(int, input().split())
         CabbageVisitDict[(width, height)] = False
 
-    wormSum = 0
-    for itemKey in CabbageVisitDict:
-        if CabbageVisitDict[itemKey]:
-            continue
-
-        BFS(CabbageVisitDict, itemKey, m, n)
-        wormSum += 1
+    result = DFS(CabbageVisitDict, m, n)
             
-    print(wormSum)
+    print(result)
 
 for _ in range(_T):
     _M_width, _N_height, _K_cabbageNumber = map(int, input().split())
