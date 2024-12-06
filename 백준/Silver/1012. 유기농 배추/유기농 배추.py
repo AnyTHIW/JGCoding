@@ -11,7 +11,7 @@ dX = [0, 0, -1, 1]
 
 def BFS(adj:dict, startKey:tuple, m, n):
     Q = queue.Queue()
-    adj[startKey]["visit"] = True
+    adj[startKey] = True
     Q.put(startKey)
     
     while not Q.empty():
@@ -21,24 +21,24 @@ def BFS(adj:dict, startKey:tuple, m, n):
             ny, nx = dY[i] + tempKey[1], dX[i] + tempKey[0]
             adjKey = (nx, ny)
             
-            if 0 <= ny < n and 0 <= nx < m and (adjKey in adj) and not adj[adjKey]["visit"]:
-                adj[adjKey]["visit"] = True
+            if 0 <= ny < n and 0 <= nx < m and (adjKey in adj) and not adj[adjKey]:
+                adj[adjKey] = True
                 
                 Q.put(adjKey)
 
 def CheckWormNumber(m:int, n:int, k:int):
-    AdjList = {}
+    CabbageVisitList = {}
 
     for _ in range(k):
         width, height = map(int, input().split())
-        AdjList[(width, height)] = {"visit":False}
+        CabbageVisitList[(width, height)] = False
 
     wormSum = 0
-    for itemKey in AdjList:
-        if AdjList[itemKey]["visit"]:
+    for itemKey in CabbageVisitList:
+        if CabbageVisitList[itemKey]:
             continue
 
-        BFS(AdjList, itemKey, m, n)
+        BFS(CabbageVisitList, itemKey, m, n)
         wormSum += 1
             
     print(wormSum)
