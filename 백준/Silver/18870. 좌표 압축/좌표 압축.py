@@ -8,14 +8,11 @@ _Xi_List = list(map(int, input().split()))
 sortedList = sorted(_Xi_List)
 dct = {}
 
-notDuplicatedIdx = 0
+idx = 0
 for item in sortedList:
-    if item in dct:
-        notDuplicatedIdx -= 1
-    else:
-        dct[item] = notDuplicatedIdx
-        
-    notDuplicatedIdx += 1
+    if item not in dct:
+        dct[item] = idx
+        idx += 1
     
 for item in _Xi_List:
     print(dct[item])
