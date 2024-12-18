@@ -11,13 +11,9 @@ dMul = 2
 Q = deque()
 Q.append(_M)
 minTimeDct = {_M: 0}
-tempTime = 0
 
 while Q:
     tempPos = Q.popleft()
-    
-    if tempPos in minTimeDct:
-        tempTime = minTimeDct[tempPos]
         
     if tempPos == _K:
         break
@@ -30,7 +26,7 @@ while Q:
             
         if 0 <= newPos <= 100000:
             if newPos not in minTimeDct:
-                minTimeDct[newPos] = tempTime + 1
+                minTimeDct[newPos] = minTimeDct[tempPos] + 1
                 Q.append(newPos)
             
-print(tempTime)
+print(minTimeDct[_K])
