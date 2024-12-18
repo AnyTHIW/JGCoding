@@ -28,7 +28,7 @@ while Q:
         else:
             newPos = tempPos + dir
             
-        if 0 <= newPos <= 1000000:
+        if 0 <= newPos <= 100000:
             if newPos not in minTimeDct:
                 minTimeDct[newPos] = tempTime + 1
                 Q.append(newPos)
