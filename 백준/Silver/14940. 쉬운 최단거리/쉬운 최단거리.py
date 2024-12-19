@@ -21,12 +21,10 @@ deltaY = [1, -1, 0, 0]
 deltaX = [0, 0, -1, 1]
 
 def BFS(map:list, target) -> list:
-    visitMap = [[False for _ in range(_m_X)] for _ in range(_n_Y)]
     distanceMap = [[-1 for _ in range(_m_X)] for _ in range(_n_Y)]
     
     Q = deque([target])
     distanceMap[target[1]][target[0]] = 0
-    visitMap[target[1]][target[0]] = True
     
     while Q:
         temp = Q.popleft()
@@ -34,9 +32,7 @@ def BFS(map:list, target) -> list:
         for i in range(4):
             newX, newY = temp[0] + deltaX[i], temp[1] + deltaY[i]
             
-            if 0 <= newX < _m_X and 0 <= newY < _n_Y and not visitMap[newY][newX]:
-                visitMap[newY][newX] = True
-                
+            if 0 <= newX < _m_X and 0 <= newY < _n_Y and distanceMap[newY][newX] == -1:
                 if map[newY][newX] == 0:
                     distanceMap[newY][newX] = 0
                 else:    
