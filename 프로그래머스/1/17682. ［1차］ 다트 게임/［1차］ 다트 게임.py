@@ -13,19 +13,16 @@ def solution(dartResult):
             scoreList += [int(numb)]
             numb = ""
         
-        if char.isalpha():
-            if char == "D":
-                scoreList[-1] **= 2
-            elif char == "T":
-                scoreList[-1] **= 3
+        if char in "SDT":
+            power = {"S":1, "D":2, "T":3}[char]
+            scoreList[-1] **= power
+            continue
         
         if char == "#":
             scoreList[-1] = - scoreList[-1]
-            
         elif char == "*":
-            scoreList[-1] = scoreList[-1] * 2
-            
-            if len(scoreList) != 1:
-                scoreList[-2] = scoreList[-2] * 2
+            scoreList[-1] *= 2
+            if len(scoreList) > 1:
+                scoreList[-2] *= 2
     
     return sum(scoreList)
