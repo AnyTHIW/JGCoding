@@ -62,5 +62,5 @@ def DP_recur(n):
     
     return DP_recur_inner(n)
 
-# print(DP_iter(_n))
-print(DP_recur(_n))
+print(DP_iter(_n))
+# print(DP_recur(_n))
