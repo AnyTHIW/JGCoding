@@ -10,7 +10,7 @@ heapQ = []
 for item in _XList:
     if item == 0:
         if heapQ:
-            print(str(heapq.heappop(heapQ)).lstrip("-"))
+            print(-heapq.heappop(heapQ))
         else:
             print(0)
     else:
