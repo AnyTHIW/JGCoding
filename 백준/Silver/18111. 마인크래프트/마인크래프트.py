@@ -8,17 +8,16 @@ N_, M_, B_ = map(int, input().split())
 HeightMap_ = [ list(map(int, input().split())) for _ in range(N_)]
 heightList = sorted(set([ _ for __ in HeightMap_ for _ in __]))
 
-def InvestigateHeight():
+def test(minH, maxH):
+    heightCount = { item:0 for item in range(heightList[0],heightList[-1]+1)}
+    
     for lst in HeightMap_:
         for item in lst:
             heightCount[item] +=1
-
-def test():
-    InvestigateHeight()
     
-    timeToMakeHeight = {item: -1 for item in heightCount}
+    timeToMakeHeight = {}
     
-    for h in timeToMakeHeight:
+    for h in range(minH, maxH + 1):
         toFill = 0
         toCarve = 0
 
@@ -32,12 +31,12 @@ def test():
             continue
 
         timeToMakeHeight[h] = toCarve * 2 + toFill * 1
-    minTime = min(value for value in timeToMakeHeight.values() if value != -1)
-    maxH_atMinTime = max([key for key, value in timeToMakeHeight.items() if value == minTime])
+        
+    minTime = min(timeToMakeHeight.values())
+    maxH_atMinTime = max(key for key, value in timeToMakeHeight.items() if value == minTime)
     print(F"{minTime} {maxH_atMinTime}")
 
 if len(heightList) == 1:
     print(F"0 {heightList[0]}")
 else:
-    heightCount = { item:0 for item in range(heightList[0],heightList[-1]+1)}
-    test()
+    test(heightList[0], heightList[-1])
