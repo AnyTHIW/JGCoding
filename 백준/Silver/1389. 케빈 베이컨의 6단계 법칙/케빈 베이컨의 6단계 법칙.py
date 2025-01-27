@@ -1,4 +1,5 @@
 import sys
+from collections import deque
 
 input = sys.stdin.readline
 INF = float('inf')
@@ -8,7 +9,6 @@ relMap = [[0] * (N_ + 1)] + [[0] + [INF] * N_ for _ in range(N_)] # padding
 
 for i in range(1, N_ + 1):
     relMap[i][i] = 0
-    
 
 for _ in range(M_):
     a, b = map(int, input().split())
@@ -16,16 +16,30 @@ for _ in range(M_):
     relMap[a][b] = 1
     relMap[b][a] = 1
     
-for btw in range(1, N_+1):
-    for stt in range(1, N_+1):
-        for ed in range(1, N_+1):
-            relMap[stt][ed] = min(relMap[stt][btw] + relMap[btw][ed], relMap[stt][ed])
+def BFS(st):  
+    vstMap = [False] * (N_+1)
+    vstMap[st] = True
 
-# 결과 계산
-result = []
-
+    Q = deque([st])
+    shortestPath = 0
+    while Q:
+        curr = Q.popleft()
+        for nxt in range(1, N_+1):    
+            if not vstMap[nxt] and relMap[curr][nxt] == 1 :
+                relMap[st][nxt] = relMap[st][curr] + 1
+                vstMap[nxt] = True
+                Q.append(nxt)
+                
 for i in range(1, N_ + 1):
-    total = sum(relMap[i])
-    result.append((i, total))
+    BFS(i)
     
-print(min(result, key=lambda item: (item[1], item[0]))[0])
+min_bacon = INF
+result = -1
+    
+for i in range(1, N_ + 1):
+    bacon = sum(relMap[i])
+    if bacon < min_bacon:
+        min_bacon = bacon
+        result = i
+
+print(result)
